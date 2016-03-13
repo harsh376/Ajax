@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = MYSQL_SERVER
 db = SQLAlchemy(app)
 
-from app.models import User
+from app.models.User import User
 
 
 @app.route('/')
