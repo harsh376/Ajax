@@ -1,16 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api
 
 MYSQL_SERVER = 'mysql+pymysql://root:testpass@localhost/db_harsh'
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = MYSQL_SERVER
 db = SQLAlchemy(app)
+api = Api(app)
 
-from app.models.User import User
+from app.resources.User import UserResource
 
-
-@app.route('/')
-def test():
-    user_name = User.query.first().name
-    return user_name
+# Mapping resources to routes
+api.add_resource(UserResource, '/users')
