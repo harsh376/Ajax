@@ -17,3 +17,27 @@
 # Freeze dependencies
 
 `pip freeze > requirements.txt`
+
+# Types of requests
+
+GET
+
+- collection: done
+- collection with params: done
+- detail
+
+POST
+
+- collection: done
+
+PATCH
+
+- detail
+
+PUT
+
+- detail
+
+DELETE
+
+- detail
