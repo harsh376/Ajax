@@ -1,6 +1,9 @@
 # converts sql row to dict
 def build_object(row):
     d = {}
+    if row is None:
+        return d
+
     for column in row.__table__.columns:
         d[column.name] = str(getattr(row, column.name))
 
