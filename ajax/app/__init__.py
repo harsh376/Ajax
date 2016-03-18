@@ -9,7 +9,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = MYSQL_SERVER
 db = SQLAlchemy(app)
 api = Api(app)
 
-from app.resources.User import Users
+from app.resources.User import Users, User
 
 # Mapping resources to routes
 api.add_resource(Users, '/users')
+api.add_resource(User, '/users/<int:id>')
