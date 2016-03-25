@@ -13,4 +13,4 @@ from app.resources.User import Users, User
 
 # Mapping resources to routes
 api.add_resource(Users, '/users')
-api.add_resource(User, '/users/<int:id>')
+api.add_resource(User, '/users/<string:id>')
