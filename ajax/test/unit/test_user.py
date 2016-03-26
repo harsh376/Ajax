@@ -1,6 +1,5 @@
-import json
-
 from test.ajaxtestcase import TestCase
+from app.utils import to_json
 
 
 class UserEndpointTestCase(TestCase):
@@ -10,7 +9,7 @@ class UserEndpointTestCase(TestCase):
         self.test_client.post('/users', data={'name': 'joe'})
         self.test_client.post('/users', data={'name': 'john'})
 
-        data = json.loads(self.test_client.get('/users').data.decode('utf8'))
+        data = to_json(self.test_client.get('/users'))
         self.assertEqual(len(data), 2)
 
     def test_get_collection_with_params(self):
@@ -18,46 +17,39 @@ class UserEndpointTestCase(TestCase):
         self.test_client.post('/users', data={'name': 'joe'})
         self.test_client.post('/users', data={'name': 'john'})
 
-        data = json.loads(
-            self.test_client.get('/users?name=joe').data.decode('utf8'))
+        data = to_json(self.test_client.get('/users?name=joe'))
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]['name'], 'joe')
 
     def test_post_collection(self):
         mock_data = {'name': 'Joe'}
-        data = self.test_client.post('/users', data=mock_data)
-        conditioned_data = json.loads(data.data.decode('utf8'))
-        self.assertEqual(conditioned_data['name'], mock_data['name'])
+        data = to_json(self.test_client.post('/users', data=mock_data))
+        self.assertEqual(data['name'], mock_data['name'])
 
     def test_get_detail(self):
         # setup
         mock_data = {'name': 'Joe'}
-        data = self.test_client.post('/users', data=mock_data)
-        id = json.loads(data.data.decode('utf8'))['id']
-
-        data = json.loads(self.test_client.get('/users/' + id).data.decode(
-            'utf8'))
+        data = to_json(self.test_client.post('/users', data=mock_data))
+        id = data['id']
+        data = to_json(self.test_client.get('/users/' + id))
         self.assertEqual(data['name'], mock_data['name'])
 
     def test_patch_detail(self):
         # setup
         mock_data = {'name': 'Joe'}
-        data = self.test_client.post('/users', data=mock_data)
-        id = json.loads(data.data.decode('utf8'))['id']
-
-        data = json.loads(self.test_client.patch(
+        data = to_json(self.test_client.post('/users', data=mock_data))
+        id = data['id']
+        data = to_json(self.test_client.patch(
             '/users/' + id,
             data={'name': 'John'},
-        ).data.decode('utf8'))
+        ))
         self.assertEqual(data['id'], id)
         self.assertEqual(data['name'], 'John')
 
     def test_delete_detail(self):
         mock_data = {'name': 'Joe'}
-        data = self.test_client.post('/users', data=mock_data)
-        id = json.loads(data.data.decode('utf8'))['id']
-
+        data = to_json(self.test_client.post('/users', data=mock_data))
+        id = data['id']
         self.test_client.delete('/users/' + id)
-        data = json.loads(self.test_client.get('/users/' + id).data.decode(
-            'utf8'))
+        data = to_json(self.test_client.get('/users/' + id))
         self.assertEqual(data, {})

@@ -1,3 +1,6 @@
+import json
+
+
 # converts sql row to dict
 def build_object(row):
     d = {}
@@ -20,3 +23,8 @@ def update_model(resource, model):
     for k, v in resource.items():
         if v is not None:
             model.__setattr__(k, v)
+
+
+# converts returned data to json; used in tests
+def to_json(data):
+    return json.loads(data.data.decode('utf8'))
