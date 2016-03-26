@@ -57,3 +57,11 @@
 *get alembic HEAD*
 
 `alembic current`
+
+# New resource
+
+- model
+- resource file
+- map route to resource
+- tests
+- migrations (if any)
