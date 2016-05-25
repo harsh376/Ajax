@@ -8,3 +8,4 @@ class UserModel(db.Model):
 
     id = db.Column(UUID, primary_key=True, nullable=False, default=uuid4)
     name = db.Column(db.String(191), nullable=False)
+    email = db.Column(db.String(128), nullable=False)

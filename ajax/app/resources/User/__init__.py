@@ -14,6 +14,7 @@ class Users(Resource):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('id', type=int, default=None)
         self.reqparse.add_argument('name', type=str, default=None)
+        self.reqparse.add_argument('email', type=str, default=None)
         self.args = self.reqparse.parse_args()
         super(Users, self).__init__()
 
@@ -21,16 +22,21 @@ class Users(Resource):
         users = _build_query({
             'id': self.args['id'],
             'name': self.args['name'],
+            'email': self.args['email'],
         })
         return build_objects(users), 200
 
     def post(self):
         try:
             assert self.args['name']
+            assert self.args['email']
         except AssertionError:
-            abort(404)
+            abort(400)
         try:
-            new_user = UserModel(name=self.args['name'])
+            new_user = UserModel(
+                name=self.args['name'],
+                email=self.args['email'],
+            )
             db.session.add(new_user)
             db.session.commit()
         except:
@@ -44,6 +50,7 @@ class User(Resource):
         self.reqparse = reqparse.RequestParser()
         # Add default value `None` for all cols except for id
         self.reqparse.add_argument('name', type=str, default=None)
+        self.reqparse.add_argument('email', type=str, default=None)
         self.args = self.reqparse.parse_args()
         super(User, self).__init__()
 
@@ -70,4 +77,6 @@ def _build_query(params):
         q = q.filter_by(id=params['id'])
     if params['name']:
         q = q.filter_by(name=params['name'])
+    if params['email']:
+        q = q.filter_by(email=params['email'])
     return q
