@@ -1,4 +1,4 @@
-# Setting up venv
+## Setting up venv
 
 `brew update`
 
@@ -8,26 +8,26 @@
 
 `pyvenv venv`
 
-# venv commands
+## venv commands
 
 `source venv/bin/activate`
 
 `deactivate`
 
-# Install packages
+## Install packages
 
 `pip install <package>`
 
-# Freeze dependencies
+## Freeze dependencies
 
 `pip freeze > requirements.txt`
 
-# Types of requests
+## Types of requests
 
 - Collection: GET, GET w params, POST
 - Detail: GET, PATCH, DELETE
 
-# Commands
+## Commands
 
 *running the app*
 
@@ -45,7 +45,7 @@
 
 `nosetests`
 
-# Migrations
+## Migrations
 
 *Creating a migration file*
 
@@ -69,7 +69,7 @@
 
 `alembic current`
 
-# New resource
+## New resource
 
 - model
 - resource file
