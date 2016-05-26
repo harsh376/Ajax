@@ -29,7 +29,7 @@
 
 ## Commands
 
-*running the app*
+**running the app**
 
 `cd ~/Desktop/dev/Ajax/ajax`
 
@@ -37,7 +37,7 @@
 
 `python run.py`
 
-*running the tests*
+**running the tests**
 
 `cd ~/Desktop/dev/Ajax/ajax`
 
@@ -47,25 +47,25 @@
 
 ## Migrations
 
-*Creating a migration file*
+**Creating a migration file**
 
 `alembic revision -m "create account table"`
 
 `alembic -c alembic.ini revision -m "Alerts timestamp"`
 
-*run migration*
+**run migration**
 
 `alembic upgrade head`
 
 `alembic -c alembic.ini upgrade head`
 
-*downgrade migration*
+**downgrade migration**
 
 `alembic downgrade -1`
 
 `alembic -c alembic.ini downgrade -1`
 
-*get alembic HEAD*
+**get alembic HEAD**
 
 `alembic current`
 
