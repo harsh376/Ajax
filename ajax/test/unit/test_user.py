@@ -36,7 +36,9 @@ class UserEndpointTestCase(TestCase):
         self.test_client.post('/users', data=data1)
         self.test_client.post('/users', data=data2)
 
-        data = to_json(self.test_client.get('/users?first_name=joe'))
+        data = to_json(self.test_client.get(
+            '/users?email=joe@email.com&external_auth_type=google',
+        ))
         self.assertEqual(len(data), 1)
         self._is_equal(data1, data[0])
 
