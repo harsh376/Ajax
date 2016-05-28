@@ -52,9 +52,9 @@ class Users(Resource):
             )
             db.session.add(new_user)
             db.session.commit()
-        except:
-            raise IntegrityError
-        return build_object(new_user)
+            return build_object(new_user)
+        except IntegrityError:
+            abort(409)
 
 
 # Resource Detail
