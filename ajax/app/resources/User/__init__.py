@@ -12,30 +12,43 @@ from .models import UserModel
 class Users(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument('id', type=int, default=None)
-        self.reqparse.add_argument('name', type=str, default=None)
+        self.reqparse.add_argument('id', type=str, default=None)
+        self.reqparse.add_argument('first_name', type=str, default=None)
+        self.reqparse.add_argument('last_name', type=str, default=None)
         self.reqparse.add_argument('email', type=str, default=None)
+        self.reqparse.add_argument('photo_url', type=str, default=None)
+        self.reqparse.add_argument('external_auth_type', type=str,
+                                   default=None)
+        self.reqparse.add_argument('external_auth_id', type=str, default=None)
         self.args = self.reqparse.parse_args()
         super(Users, self).__init__()
 
     def get(self):
         users = _build_query({
             'id': self.args['id'],
-            'name': self.args['name'],
+            'first_name': self.args['first_name'],
+            'last_name': self.args['last_name'],
             'email': self.args['email'],
+            'external_auth_type': self.args['external_auth_type'],
         })
         return build_objects(users), 200
 
     def post(self):
         try:
-            assert self.args['name']
+            assert self.args['first_name']
             assert self.args['email']
+            assert self.args['external_auth_type']
+            assert self.args['external_auth_id']
         except AssertionError:
             abort(400)
         try:
             new_user = UserModel(
-                name=self.args['name'],
+                first_name=self.args['first_name'],
+                last_name=self.args['last_name'],
                 email=self.args['email'],
+                photo_url=self.args['photo_url'],
+                external_auth_type=self.args['external_auth_type'],
+                external_auth_id=self.args['external_auth_id'],
             )
             db.session.add(new_user)
             db.session.commit()
@@ -49,8 +62,13 @@ class User(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         # Add default value `None` for all cols except for id
-        self.reqparse.add_argument('name', type=str, default=None)
+        self.reqparse.add_argument('first_name', type=str, default=None)
+        self.reqparse.add_argument('last_name', type=str, default=None)
         self.reqparse.add_argument('email', type=str, default=None)
+        self.reqparse.add_argument('photo_url', type=str, default=None)
+        self.reqparse.add_argument('external_auth_type', type=str,
+                                   default=None)
+        self.reqparse.add_argument('external_auth_id', type=str, default=None)
         self.args = self.reqparse.parse_args()
         super(User, self).__init__()
 
@@ -75,8 +93,12 @@ def _build_query(params):
     q = UserModel.query
     if params['id']:
         q = q.filter_by(id=params['id'])
-    if params['name']:
-        q = q.filter_by(name=params['name'])
+    if params['first_name']:
+        q = q.filter_by(first_name=params['first_name'])
+    if params['last_name']:
+        q = q.filter_by(last_name=params['last_name'])
     if params['email']:
         q = q.filter_by(email=params['email'])
+    if params['external_auth_type']:
+        q = q.filter_by(external_auth_type=params['external_auth_type'])
     return q
