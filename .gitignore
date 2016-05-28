@@ -1,3 +1,4 @@
 venv/
 .idea
 ajax/app/__pycache__
+*.pyc
