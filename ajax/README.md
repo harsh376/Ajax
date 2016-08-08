@@ -76,3 +76,25 @@
 - map route to resource
 - tests
 - migrations (if any)
+
+## Docker
+
+### Setup
+
+`docker-compose up -d`
+
+`source venv/bin/activate`
+
+*Make sure `alembic.ini` has the right `sqlalchemy.url`*
+
+`alembic -c alembic.ini upgrade head`
+
+### Other commands
+
+*Running MySQL server instance inside a docker container*
+
+`docker run -p 3306:3306 --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5.6`
+
+*Connect to MySQL from the MySQL command line client*
+
+`docker run -it --link some-mysql:mysql --rm mysql:5.6 sh -c 'exec mysql -h"$MYSQL_PORT_3306_TCP_ADDR" -P"$MYSQL_PORT_3306_TCP_PORT" -uroot -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD"'`

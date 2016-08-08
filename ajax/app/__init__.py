@@ -2,7 +2,19 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 
-MYSQL_SERVER = 'mysql+pymysql://root:testpass@localhost/db_harsh'
+USER = 'root'
+# PASSWORD = 'testpass'
+PASSWORD = 'my-secret-pw'
+# HOSTNAME = 'localhost' # local mac
+HOSTNAME = '192.168.99.100' # docker-machine
+DATABASE = 'db_harsh'
+
+MYSQL_SERVER = 'mysql+pymysql://%s:%s@%s/%s'%(
+    USER,
+    PASSWORD,
+    HOSTNAME,
+    DATABASE,
+)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = MYSQL_SERVER
