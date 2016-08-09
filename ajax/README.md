@@ -45,6 +45,14 @@
 
 `nosetests`
 
+## Logging
+
+*import app at the top of the file that you want to add a log statement*
+
+`import app`
+
+`app.app.logger.info('some log message')`
+
 ## Migrations
 
 **Creating a migration file**

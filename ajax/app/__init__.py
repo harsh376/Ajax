@@ -1,3 +1,4 @@
+import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
@@ -9,7 +10,7 @@ PASSWORD = 'my-secret-pw'
 HOSTNAME = '192.168.99.100' # docker-machine
 DATABASE = 'db_harsh'
 
-MYSQL_SERVER = 'mysql+pymysql://%s:%s@%s/%s'%(
+MYSQL_SERVER = 'mysql+pymysql://%s:%s@%s/%s?charset=utf8mb4'%(
     USER,
     PASSWORD,
     HOSTNAME,
@@ -17,9 +18,14 @@ MYSQL_SERVER = 'mysql+pymysql://%s:%s@%s/%s'%(
 )
 
 app = Flask(__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = MYSQL_SERVER
 db = SQLAlchemy(app)
 api = Api(app)
+
+# Configure logging
+app.logger.addHandler(logging.StreamHandler())
+app.logger.setLevel(logging.INFO)
 
 from app.resources.User import Users, User
 from app.resources.Item import Items, Item
