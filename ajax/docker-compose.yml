@@ -1,5 +1,18 @@
 version: '2'
 services:
+  web:
+    image: hector
+    volumes:
+      - ../../hector:/usr/src/app/:rw
+    ports:
+      - "8000:3000"
+    environment:
+      - NODE_ENV=dev
+    command: >
+      sh -c '
+        npm run start:noauth;
+      '
+
   ajax:
     image: ajax
     ports:

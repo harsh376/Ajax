@@ -87,7 +87,7 @@
 
 ## Docker
 
-### Setup
+### Dev Environment
 
 `docker-compose up -d`
 
