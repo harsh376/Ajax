@@ -62,8 +62,7 @@ class UUID(UnboundTypeDecorator):
 
     def process_bind_param(self, value, dialect):
         """ Emit the param in hex notation. """
-        if isinstance(value, str):
-            value = uuid.UUID(value)
+        value = uuid.UUID(str(value))
         return value if value is None else value.bytes
 
     def process_result_value(self, value, dialect):

@@ -1,0 +1,54 @@
+version: '2'
+services:
+  web:
+    image: hector
+    ports:
+      - "8000:4000"
+    environment:
+      - AJAX_HOST=tcp://ajax:5000
+      - REDIS_HOST=redis
+    command: >
+      sh -c '
+        npm run deploy;
+      '
+
+  ajax:
+    image: ajax
+    ports:
+      - "5000:5000"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=db_harsh
+    entrypoint: ./script.sh
+
+  data:
+    restart: always
+    image: mysql:5.6
+    volumes:
+      - /var/lib/mysql
+    command: "true"
+
+  db:
+    restart: always
+    image: mysql:5.6
+    volumes:
+      - ./mysql_conf:/etc/mysql/conf.d
+    volumes_from:
+      - data
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: db_harsh
+    tty: true
+
+  redis:
+    image: store
+    ports:
+      - "6379:6379"
+    command: >
+      sh -c '
+        redis-server --protected-mode no;
+      '
