@@ -1,41 +1,9 @@
 version: '2'
 services:
-  web:
-    image: hector
-    volumes:
-      - ../../hector:/usr/src/app/:rw
-    ports:
-      - "8000:3000"
-    environment:
-      - NODE_ENV=dev
-    command: >
-      sh -c '
-        npm run start:noauth;
-      '
+  web: {}
 
-  ajax:
-    image: ajax
-    ports:
-      - "5000:5000"
-    entrypoint: ./script.sh
+  ajax: {}
 
-  data:
-    restart: always
-    image: mysql:5.6
-    volumes:
-      - /var/lib/mysql
-    command: "true"
+  data: {}
 
-  db:
-    restart: always
-    image: mysql:5.6
-    volumes:
-      - ./mysql_conf:/etc/mysql/conf.d
-    volumes_from:
-      - data
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: my-secret-pw
-      MYSQL_DATABASE: db_harsh
-    tty: true
+  db: {}

@@ -1,14 +1,14 @@
+import os
 import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 
-USER = 'root'
-# PASSWORD = 'testpass'
-PASSWORD = 'my-secret-pw'
-# HOSTNAME = 'localhost' # local mac
-HOSTNAME = '192.168.99.100' # docker-machine
-DATABASE = 'db_harsh'
+
+USER = os.environ.get('MYSQL_USER', 'root')
+PASSWORD = os.environ.get('MYSQL_PASSWORD', 'testpass')
+HOSTNAME = os.environ.get('MYSQL_HOST', 'localhost')
+DATABASE = os.environ.get('MYSQL_DATABASE', 'db_harsh')
 
 MYSQL_SERVER = 'mysql+pymysql://%s:%s@%s/%s?charset=utf8mb4'%(
     USER,

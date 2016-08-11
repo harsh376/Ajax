@@ -77,6 +77,10 @@
 
 `alembic current`
 
+**Running migrations on dockerized mysql db**
+
+*Make sure `alembic.ini` has the right `sqlalchemy.url`*
+
 ## New resource
 
 - model
@@ -87,21 +91,32 @@
 
 ## Docker
 
-### Dev Environment
+### Required docker images
 
-`docker-compose up -d`
+- hector
+- ajax
+- mysql:5.6
+- store
 
-`source venv/bin/activate`
+### Build images
 
-*Make sure `alembic.ini` has the right `sqlalchemy.url`*
+`docker build -t ajax .`
 
-`alembic -c alembic.ini upgrade head`
+`docker build -t hector ../../hector`
+
+`docker build -t store ./docker/redis`
+
+### Run containers
+
+*dev*
+
+`docker-compose up`
+
+*Production*
+
+`docker-compose -f docker-compose.yml -f docker-compose.prod.yml up`
 
 ### Other commands
-
-*Running MySQL server instance inside a docker container*
-
-`docker run -p 3306:3306 --name some-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5.6`
 
 *Connect to MySQL from the MySQL command line client*
 
