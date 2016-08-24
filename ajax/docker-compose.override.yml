@@ -5,7 +5,7 @@ services:
     volumes:
       - ../../hector:/usr/src/app/:rw
     ports:
-      - "8000:3000"
+      - "80:3000"
     environment:
       - NODE_ENV=dev
       - AJAX_HOST=tcp://ajax:5000
@@ -23,7 +23,12 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=my-secret-pw
       - MYSQL_DATABASE=db_harsh
-    entrypoint: ./script.sh
+    entrypoint: [
+      "./script.sh",
+      "192.168.99.100",
+      "root",
+      "my-secret-pw"
+    ]
 
   data:
     restart: always
