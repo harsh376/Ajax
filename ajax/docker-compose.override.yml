@@ -23,6 +23,7 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=my-secret-pw
       - MYSQL_DATABASE=db_harsh
+      - LANG=C.UTF-8
     entrypoint: [
       "./script.sh",
       "192.168.99.100",

@@ -8,7 +8,14 @@ def build_object(row):
         return d
 
     for column in row.__table__.columns:
-        d[column.name] = str(getattr(row, column.name))
+        # TODO: Need try-except for python2.7 inside docker container
+        # After figuring out venv inside docker, relative imports
+        # remove this hack
+        try:
+            a = str(getattr(row, column.name))
+        except UnicodeEncodeError:
+            a = getattr(row, column.name).encode('utf-8')
+        d[column.name] = a
 
     return d
 
