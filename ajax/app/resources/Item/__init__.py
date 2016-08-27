@@ -13,7 +13,10 @@ class Items(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('id', type=str)
-        self.reqparse.add_argument('name', type=str, default=None)
+        # removed the type because for python2.7 (docker)
+        # default is 'unicode'
+        # TODO: add type after upgrading to python3.4 inside docker
+        self.reqparse.add_argument('name', default=None)
         self.reqparse.add_argument('order', type=int, default=0)
         self.args = self.reqparse.parse_args()
         super(Items, self).__init__()
@@ -45,7 +48,8 @@ class Item(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         # Add default value `None` for all cols except for id
-        self.reqparse.add_argument('name', type=str, default=None)
+        # TODO: add type after upgrading to python3.4 inside docker
+        self.reqparse.add_argument('name', default=None)
         self.reqparse.add_argument('order', type=int, default=0)
         self.args = self.reqparse.parse_args()
         super(Item, self).__init__()

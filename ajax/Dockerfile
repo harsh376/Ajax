@@ -1,8 +1,11 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get install -y python3.4 python-pip mysql-client-core-5.5
+RUN apt-get install -y \
+    python3.4 \
+    python-pip \
+    mysql-client-core-5.5
 
 WORKDIR /usr/src/app
 
@@ -14,6 +17,7 @@ ADD . /usr/src/app
 ADD script.sh /usr/src/app/script.sh
 RUN chmod +x script.sh
 
+ENV LANG=C.UTF-8
 ENV MYSQL_HOST=db1.cziojw5wy8sn.us-west-2.rds.amazonaws.com
 ENV MYSQL_USER=harsh
 ENV MYSQL_PASSWORD=secretpass
