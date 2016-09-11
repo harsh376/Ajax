@@ -11,6 +11,7 @@ services:
       - DOCKER_ENABLED=true
     command: >
       sh -c '
+        npm run build:dev &&
         npm run start:noauth;
       '
 
