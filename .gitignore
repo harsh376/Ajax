@@ -3,3 +3,8 @@ venv/
 ajax/app/__pycache__
 *.pyc
 scratch-pad.md
+docker-compose.yml
+docker-compose.override.yml
+docker-compose.prod.yml
+Dockerfile
+Dockerrun.aws.json
