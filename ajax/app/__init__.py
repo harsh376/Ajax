@@ -29,6 +29,9 @@ app.logger.setLevel(logging.INFO)
 
 from app.resources.User import Users, User
 from app.resources.Item import Items, Item
+from app.resources.UserV2 import UsersV2
+from app.resources.Auth import Auth
+
 
 # Mapping resources to routes
 
@@ -37,3 +40,8 @@ api.add_resource(User, '/users/<string:id>')
 
 api.add_resource(Items, '/items')
 api.add_resource(Item, '/items/<string:id>')
+
+api.add_resource(UsersV2, '/users/v2')
+
+api.add_resource(Auth, '/token')
+
